@@ -13,7 +13,7 @@ const HomePage = ({data}) => {
               {data.allContentstackBlogpost.edges.map(({ node }) => {
                 return (
                   <li key={node.url}>
-                    <h3>{node.title}</h3>
+                    <a href={node.url}><h3>{node.title}</h3></a>
                     <span>{node.publish_details.time}</span>
                     {node.excerpt}
                     <ul>

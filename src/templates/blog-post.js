@@ -1,30 +1,26 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
-import get from 'lodash/get'
 import Layout from '../components/layout'
 
-class BlogPostTemplate extends React.Component {
-  render() {
-    const post = get(this.props, 'data.contentstackBlogpost')
-    const siteTitle = get(this.props, 'data.site.siteMetadata.title')
+const BlogPostTemplate = ({data}) => {
 
     return (
-      <Layout location={this.props.location}>
+      <Layout>
         <div style={{ background: '#fff' }}>
-          <Helmet title={`${post.title} | ${siteTitle}`} />
+          <Helmet title={`${data.contentstackBlogpost.title}`} />
           <div className="wrapper">
-            <h1 className="section-headline">{post.title}</h1>
+            <h1 className="section-headline">{data.contentstackBlogpost.title}</h1>
             <p
               style={{
                 display: 'block',
               }}
             >
-              {post.publish_details.time}
+              {data.contentstackBlogpost.publish_details.time}
             </p>
             <div
               dangerouslySetInnerHTML={{
-                __html: post.body
+                __html: data.contentstackBlogpost.body
               }}
             />
           </div>
@@ -32,7 +28,6 @@ class BlogPostTemplate extends React.Component {
       </Layout>
     )
   }
-}
 
 export default BlogPostTemplate
 
@@ -41,8 +36,8 @@ export const pageQuery = graphql`
     contentstackBlogpost(url: {eq: $slug}) {
       title
       publish_details {
-        time
-      }
+        time(formatString: "MMMM Do, YYYY")
+    }
       body
     }
   }
